@@ -1,5 +1,7 @@
-package me.maxandroid.italker;
+package me.maxandroid.italker.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 
@@ -24,6 +26,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import me.maxandroid.common.app.Activity;
 import me.maxandroid.common.widget.PortraitView;
+import me.maxandroid.italker.R;
+import me.maxandroid.italker.activities.AccountActivity;
+import me.maxandroid.italker.frags.assist.PermissionFragment;
 import me.maxandroid.italker.frags.main.ActiveFragment;
 import me.maxandroid.italker.frags.main.ContactFragment;
 import me.maxandroid.italker.frags.main.GroupFragment;
@@ -47,6 +52,9 @@ public class MainActivity extends Activity
     FloatActionButton mAction;
     private NavHelper<Integer> mNavHelper;
 
+    public static void show(Context context) {
+        context.startActivity(new Intent(context, MainActivity.class));
+    }
     @Override
     protected int getContentLayoutId() {
         return R.layout.activity_main;
@@ -70,6 +78,8 @@ public class MainActivity extends Activity
                     }
                 });
 
+
+
     }
 
     @Override
@@ -86,7 +96,7 @@ public class MainActivity extends Activity
 
     @OnClick(R.id.btn_action)
     void onActionClick() {
-
+        AccountActivity.show(this);
     }
 
     @Override
