@@ -1,4 +1,4 @@
-package me.maxandroid.italker.frags.account;
+package me.maxandroid.italker.frags.user;
 
 
 import android.content.Intent;

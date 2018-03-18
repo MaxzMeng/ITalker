@@ -1,5 +1,8 @@
 package me.maxandroid.italker;
 
+import com.example.factory.Factory;
+import com.igexin.sdk.PushManager;
+
 import me.maxandroid.common.app.Application;
 
 /**
@@ -7,4 +10,10 @@ import me.maxandroid.common.app.Application;
  */
 
 public class App extends Application{
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Factory.setup();
+        PushManager.getInstance().initialize(this);
+    }
 }
