@@ -22,7 +22,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/len_92"
+        android:minHeight="@dimen/len_128"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout

@@ -37,7 +37,9 @@
         <activity
             android:name=".activities.AccountActivity"
             android:theme="@style/AppTheme.Account" />
-        <activity android:name=".activities.UserActivity" />
+        <activity
+            android:name=".activities.UserActivity"
+            android:theme="@style/AppTheme.Account" />
 
         <receiver
             android:name=".MessageReceiver"

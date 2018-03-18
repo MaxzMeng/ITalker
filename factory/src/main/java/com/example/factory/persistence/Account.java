@@ -3,6 +3,7 @@ package com.example.factory.persistence;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.factory.Factory;
 import com.example.factory.model.api.account.AccountRspModel;
@@ -49,6 +50,7 @@ public class Account {
         userId = sp.getString(KEY_USER_ID, "");
         account = sp.getString(KEY_ACCOUNT, "");
     }
+
     public static void setPushId(String pushId) {
         Account.pushId = pushId;
         Account.save(Factory.app());
@@ -64,8 +66,14 @@ public class Account {
     }
 
     public static boolean isComplete() {
-        //TODO
-        return isLogin();
+        if (isLogin()) {
+            User self = getUser();
+            Log.e("TAG", self.toString());
+            return !TextUtils.isEmpty(self.getDesc())
+                    && !TextUtils.isEmpty(self.getPortrait())
+                    && self.getSex() != 0;
+        }
+        return false;
     }
 
     public static boolean isBind() {

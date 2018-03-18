@@ -17,7 +17,9 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import me.maxandroid.common.app.Application;
+import me.maxandroid.italker.LaunchActivity;
 import me.maxandroid.italker.R;
+import me.maxandroid.italker.activities.MainActivity;
 import me.maxandroid.italker.frags.media.GalleryFragment;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -29,8 +31,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class PermissionFragment extends BottomSheetDialogFragment implements EasyPermissions.PermissionCallbacks {
     private static final int RC = 0x0100;
     GalleryFragment.TransStatusBottomSheetDialog dialog;
-    public PermissionFragment() {
 
+    public PermissionFragment() {
     }
 
     @NonNull
@@ -64,7 +66,7 @@ public class PermissionFragment extends BottomSheetDialogFragment implements Eas
     }
 
     private void refreshState(View root) {
-        if (root==null) return;
+        if (root == null) return;
         Context context = getContext();
         root.findViewById(R.id.im_state_permission_network).setVisibility(haveNetwork(context) ? View.VISIBLE : View.GONE);
         root.findViewById(R.id.im_state_permission_read).setVisibility(haveRead(context) ? View.VISIBLE : View.GONE);
@@ -140,6 +142,10 @@ public class PermissionFragment extends BottomSheetDialogFragment implements Eas
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
         dialog.dismiss();
+        if (getActivity() instanceof LaunchActivity) {
+            MainActivity.show(getActivity());
+            getActivity().finish();
+        }
     }
 
     @Override

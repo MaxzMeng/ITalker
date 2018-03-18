@@ -2,6 +2,7 @@ package me.maxandroid.italker.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.example.factory.persistence.Account;
 
 import java.util.Objects;
 
@@ -55,6 +57,22 @@ public class MainActivity extends Activity
     public static void show(Context context) {
         context.startActivity(new Intent(context, MainActivity.class));
     }
+
+    @Override
+    protected boolean initArgs(Bundle bundle) {
+        if (Account.isLogin()) {
+            if (Account.isComplete()) {
+                return super.initArgs(bundle);
+            } else {
+                UserActivity.show(this);
+                return false;
+            }
+        } else {
+            AccountActivity.show(this);
+            return false;
+        }
+    }
+
     @Override
     protected int getContentLayoutId() {
         return R.layout.activity_main;
@@ -77,7 +95,6 @@ public class MainActivity extends Activity
                         this.view.setBackground(resource.getCurrent());
                     }
                 });
-
 
 
     }

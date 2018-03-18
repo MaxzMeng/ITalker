@@ -3,16 +3,25 @@ package me.maxandroid.italker.frags.user;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.factory.Factory;
 import com.example.factory.net.UploadHelper;
+import com.example.factory.presenter.account.LoginPresenter;
+import com.example.factory.presenter.user.UpdateInfoContract;
+import com.example.factory.presenter.user.UpdateInfoPresenter;
 import com.yalantis.ucrop.UCrop;
+
+import net.qiujuer.genius.ui.widget.Loading;
 
 import java.io.File;
 
@@ -20,8 +29,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import me.maxandroid.common.app.Application;
 import me.maxandroid.common.app.Fragment;
+import me.maxandroid.common.app.PresenterFragment;
 import me.maxandroid.common.widget.PortraitView;
 import me.maxandroid.italker.R;
+import me.maxandroid.italker.activities.MainActivity;
 import me.maxandroid.italker.frags.media.GalleryFragment;
 
 import static android.app.Activity.RESULT_OK;
@@ -29,9 +40,19 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UpdateInfoFragment extends Fragment {
+public class UpdateInfoFragment extends PresenterFragment<UpdateInfoContract.Presenter> implements UpdateInfoContract.View {
     @BindView(R.id.im_portrait)
     PortraitView mPortraitView;
+    @BindView(R.id.im_sex)
+    ImageView mSex;
+    @BindView(R.id.edit_desc)
+    EditText mDesc;
+    @BindView(R.id.loading)
+    Loading mLoading;
+    @BindView(R.id.btn_submit)
+    Button mSubmit;
+    private String mPortraitPath;
+    private boolean isMan;
 
     public UpdateInfoFragment() {
         // Required empty public constructor
@@ -75,6 +96,7 @@ public class UpdateInfoFragment extends Fragment {
     }
 
     private void loadPortrait(Uri uri) {
+        mPortraitPath = uri.getPath();
         Glide.with(this)
                 .load(uri)
                 .asBitmap()
@@ -88,5 +110,51 @@ public class UpdateInfoFragment extends Fragment {
             }
         });
 
+    }
+
+    @OnClick(R.id.im_sex)
+    void onSexClick() {
+        isMan = !isMan;
+        Drawable drawable = getResources().getDrawable(isMan ? R.drawable.ic_sex_man : R.drawable.ic_sex_woman);
+        mSex.setImageDrawable(drawable);
+        mSex.getBackground().setLevel(isMan ? 0 : 1);
+    }
+
+    @OnClick(R.id.btn_submit)
+    void onSubmitClick() {
+        String desc = mDesc.getText().toString();
+        mPresenter.update(mPortraitPath, desc, isMan);
+    }
+
+    @Override
+    protected UpdateInfoContract.Presenter initPresenter() {
+        return new UpdateInfoPresenter(this);
+//        return null;
+    }
+
+    @Override
+    public void updateSucceed() {
+        MainActivity.show(getContext());
+        getActivity().finish();
+    }
+
+    @Override
+    public void showError(int str) {
+        super.showError(str);
+        mLoading.stop();
+        mPortraitView.setEnabled(true);
+        mDesc.setEnabled(true);
+        mSex.setEnabled(true);
+        mSubmit.setEnabled(true);
+    }
+
+    @Override
+    public void showLoading() {
+        super.showLoading();
+        mLoading.start();
+        mPortraitView.setEnabled(false);
+        mDesc.setEnabled(false);
+        mSex.setEnabled(false);
+        mSubmit.setEnabled(false);
     }
 }
