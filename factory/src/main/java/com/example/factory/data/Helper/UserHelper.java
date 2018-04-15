@@ -8,6 +8,9 @@ import com.example.factory.model.card.UserCard;
 import com.example.factory.model.db.User;
 import com.example.factory.net.Network;
 import com.example.factory.net.RemoteService;
+import com.example.factory.presenter.contact.FollowPresenter;
+
+import java.util.List;
 
 import me.maxandroid.factory.data.DataSource;
 import retrofit2.Call;
@@ -42,5 +45,56 @@ public class UserHelper {
                 callback.onDataNotAvailable(R.string.data_network_error);
             }
         });
+    }
+
+    public static Call search(String name, final DataSource.Callback<List<UserCard>> callback) {
+        RemoteService service = Network.remote();
+        Call<RspModel<List<UserCard>>> call = service.userSearch(name);
+        call.enqueue(new Callback<RspModel<List<UserCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
+                RspModel<List<UserCard>> rspModel = response.body();
+                if (rspModel.success()) {
+                    callback.onDataLoaded(rspModel.getResult());
+                } else {
+                    Factory.decodeRspCode(rspModel, callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+            }
+        });
+
+        return call;
+    }
+
+
+    public static void follow(String id, final DataSource.Callback<UserCard> callback) {
+        RemoteService service = Network.remote();
+
+        Call<RspModel<UserCard>> call = service.userFollow(id);
+        call.enqueue(new Callback<RspModel<UserCard>>() {
+            @Override
+            public void onResponse(Call<RspModel<UserCard>> call, Response<RspModel<UserCard>> response) {
+                RspModel<UserCard> rspModel = response.body();
+                if (rspModel.success()) {
+                    UserCard userCard = rspModel.getResult();
+                    User user = userCard.build();
+                    user.save();
+                    //TODO 通知联系人列表刷新
+                    callback.onDataLoaded(userCard);
+                } else {
+                    Factory.decodeRspCode(rspModel, callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<UserCard>> call, Throwable t) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+            }
+        });
+
     }
 }

@@ -24,19 +24,19 @@ import me.maxandroid.utils.HashUtil;
 
 public class UploadHelper {
     private static final String TAG = UploadHelper.class.getSimpleName();
-    //    private static final String ENDPOINT = "oss-cn-beijing.aliyuncs.com";
-//    private static final String BUCKET_NAME = "immax";
-    public static final String ENDPOINT = "http://oss-cn-hongkong.aliyuncs.com";
-    // 上传的仓库名
-    private static final String BUCKET_NAME = "italker-new";
+        private static final String ENDPOINT = "oss-cn-beijing.aliyuncs.com";
+    private static final String BUCKET_NAME = "immax";
+//    public static final String ENDPOINT = "http://oss-cn-hongkong.aliyuncs.com";
+//     上传的仓库名
+//    private static final String BUCKET_NAME = "italker-new";
 
     private static OSS getClient() {
-//        OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider("LTAI7tHGKyldTLU0", "");
-//        OSS oss = new OSSClient(Factory.app(), ENDPOINT, credentialProvider);
-//        return oss;
-        OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider(
-                "LTAIYQD07p05pHQW", "2txxzT8JXiHKEdEjylumFy6sXcDQ0G");
-        return new OSSClient(Factory.app(), ENDPOINT, credentialProvider);
+        OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider("LTAI7tHGKyldTLU0", "HilwdqruSNkbqUzRibiymp1kGgBhvy");
+        OSS oss = new OSSClient(Factory.app(), ENDPOINT, credentialProvider);
+        return oss;
+//        OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider(
+//                "LTAIYQD07p05pHQW", "2txxzT8JXiHKEdEjylumFy6sXcDQ0G");
+//        return new OSSClient(Factory.app(), ENDPOINT, credentialProvider);
     }
 
     private static String upload(String objKey, String path) {

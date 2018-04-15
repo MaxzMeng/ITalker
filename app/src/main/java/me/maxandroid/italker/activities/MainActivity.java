@@ -108,12 +108,18 @@ public class MainActivity extends Activity
 
     @OnClick(R.id.im_search)
     void onSearchMenuClick() {
-
+        int type = Objects.equals(mNavHelper.getCurrentTab().extra, R.string.title_group) ? SearchActivity.TYPE_GROUP : SearchActivity.TYPE_USER;
+        SearchActivity.show(this, type);
     }
 
     @OnClick(R.id.btn_action)
     void onActionClick() {
-        AccountActivity.show(this);
+        if (Objects.equals(mNavHelper.getCurrentTab().extra, R.string.title_group)) {
+
+        } else {
+            SearchActivity.show(this, SearchActivity.TYPE_USER);
+        }
+
     }
 
     @Override

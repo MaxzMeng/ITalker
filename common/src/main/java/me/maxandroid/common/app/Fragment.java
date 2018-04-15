@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.maxandroid.common.widget.convention.PlaceHolderView;
 
 /**
  * Created by MXZ on 2018/3/9.
@@ -18,7 +19,7 @@ import butterknife.Unbinder;
 public abstract class Fragment extends android.support.v4.app.Fragment {
     protected View mRoot;
     protected Unbinder mRootUnBinder;
-
+    protected PlaceHolderView mPlaceHolderView;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -65,5 +66,9 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
 
     public boolean onBackPressed() {
         return false;
+    }
+
+    public void setPlaceHolderView(PlaceHolderView placeHolderView) {
+        this.mPlaceHolderView = placeHolderView;
     }
 }

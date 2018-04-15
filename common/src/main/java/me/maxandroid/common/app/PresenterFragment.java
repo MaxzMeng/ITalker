@@ -2,6 +2,7 @@ package me.maxandroid.common.app;
 
 import android.content.Context;
 
+import me.maxandroid.common.widget.convention.PlaceHolderView;
 import me.maxandroid.factory.presenter.BaseContract;
 
 /**
@@ -21,12 +22,19 @@ public abstract class PresenterFragment<Presenter extends BaseContract.Presenter
 
     @Override
     public void showError(int str) {
-        Application.showToast(str);
+        if (mPlaceHolderView != null) {
+            mPlaceHolderView.triggerError(str);
+        } else {
+            Application.showToast(str);
+        }
     }
 
     @Override
     public void showLoading() {
-        //TODO 显示一个Loading
+
+        if (mPlaceHolderView != null) {
+            mPlaceHolderView.triggerLoading();
+        }
     }
 
 

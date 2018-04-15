@@ -46,4 +46,3 @@ dependencies {
     compile "pub.devrel:easypermissions:$rootProject.ext.easypermissionVersion"
     compile "com.getui:sdk:$rootProject.ext.getuiVersion"
 }
-

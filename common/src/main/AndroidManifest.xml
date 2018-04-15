@@ -1,2 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.maxandroid.common" />
+    package="me.maxandroid.common">
+
+    <application>
+        <!--<activity android:name=".app.ToolBarActivity"></activity>-->
+    </application>
+
+</manifest>
