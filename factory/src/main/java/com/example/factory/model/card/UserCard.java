@@ -4,11 +4,13 @@ import com.example.factory.model.db.User;
 
 import java.util.Date;
 
+import me.maxandroid.factory.model.Author;
+
 /**
  * Created by mxz on 18-3-18.
  */
 
-public class UserCard {
+public class UserCard implements Author{
     private String id;
     private String name;
     private String phone;

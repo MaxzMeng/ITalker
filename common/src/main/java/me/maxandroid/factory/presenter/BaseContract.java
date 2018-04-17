@@ -2,6 +2,8 @@ package me.maxandroid.factory.presenter;
 
 import android.support.annotation.StringRes;
 
+import me.maxandroid.common.widget.recycler.RecyclerAdapter;
+
 /**
  * Created by mxz on 18-3-17.
  */
@@ -20,4 +22,11 @@ public interface BaseContract {
 
         void destroy();
     }
+
+    interface RecyclerView<T extends Presenter, ViewModel> extends View<T> {
+        RecyclerAdapter<ViewModel> getRecyclerAdapter();
+
+        void onAdapterDataChanged();
+    }
+
 }

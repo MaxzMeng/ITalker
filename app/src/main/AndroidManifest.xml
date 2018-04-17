@@ -51,10 +51,11 @@
         </receiver>
 
         <activity
-            android:label="@string/title_search"
             android:name=".activities.SearchActivity"
+            android:label="@string/title_search"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransStatusBar" />
+        <activity android:name=".activities.MessageActivity"></activity>
     </application>
 
 </manifest>
