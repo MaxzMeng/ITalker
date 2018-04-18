@@ -32,6 +32,7 @@ import me.maxandroid.common.widget.EmptyView;
 import me.maxandroid.common.widget.PortraitView;
 import me.maxandroid.common.widget.recycler.RecyclerAdapter;
 import me.maxandroid.italker.R;
+import me.maxandroid.italker.activities.PersonalActivity;
 import me.maxandroid.italker.activities.SearchActivity;
 import me.maxandroid.italker.frags.main.ContactFragment;
 
@@ -119,6 +120,11 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
             mPortraitView.setup(Glide.with(SearchUserFragment.this), userCard);
             mName.setText(userCard.getName());
             mFollow.setEnabled(!userCard.isFollow());
+        }
+
+        @OnClick(R.id.im_portrait)
+        void onPortraitClick() {
+            PersonalActivity.show(getContext(), mData.getId());
         }
 
         @OnClick(R.id.im_follow)

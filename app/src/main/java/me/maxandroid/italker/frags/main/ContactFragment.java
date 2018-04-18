@@ -16,6 +16,7 @@ import com.example.factory.presenter.contact.ContactContract;
 import com.example.factory.presenter.contact.ContactPresenter;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import me.maxandroid.common.app.Fragment;
 import me.maxandroid.common.app.PresenterFragment;
 import me.maxandroid.common.widget.EmptyView;
@@ -23,11 +24,12 @@ import me.maxandroid.common.widget.PortraitView;
 import me.maxandroid.common.widget.recycler.RecyclerAdapter;
 import me.maxandroid.italker.R;
 import me.maxandroid.italker.activities.MessageActivity;
+import me.maxandroid.italker.activities.PersonalActivity;
 import me.maxandroid.italker.frags.search.SearchUserFragment;
 
 
 public class ContactFragment extends PresenterFragment<ContactContract.Presenter>
-            implements ContactContract.View{
+        implements ContactContract.View {
 
 
     @BindView(R.id.empty)
@@ -35,6 +37,7 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
     @BindView(R.id.recycler)
     RecyclerView mRecycler;
     private RecyclerAdapter<User> mAdapter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_contact;
@@ -96,6 +99,7 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
 
         @BindView(R.id.txt_desc)
         TextView mDesc;
+
         public ViewHolder(View itemView) {
             super(itemView);
         }
@@ -105,6 +109,11 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
             mPortraitView.setup(Glide.with(ContactFragment.this), user);
             mName.setText(user.getName());
             mDesc.setText(user.getDesc());
+        }
+
+        @OnClick(R.id.im_portrait)
+        void onPortraitClick() {
+            PersonalActivity.show(getContext(), mData.getId());
         }
     }
 }

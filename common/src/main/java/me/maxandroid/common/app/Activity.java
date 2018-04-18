@@ -9,24 +9,30 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import me.maxandroid.common.widget.convention.PlaceHolderView;
 
 /**
  * Created by MXZ on 2018/3/9.
  */
 
 public abstract class Activity extends AppCompatActivity {
-
+    protected PlaceHolderView mPlaceHolderView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (initArgs(getIntent().getExtras())) {
             setContentView(getContentLayoutId());
             initWindows();
+            initBefore();
             initWidget();
             initData();
         } else {
             finish();
         }
+
+    }
+
+    protected void initBefore() {
 
     }
 
@@ -48,6 +54,7 @@ public abstract class Activity extends AppCompatActivity {
 
     }
 
+
     @Override
     public boolean onSupportNavigateUp() {
         finish();
@@ -67,5 +74,9 @@ public abstract class Activity extends AppCompatActivity {
             }
         }
         super.onBackPressed();
+    }
+
+    public void setPlaceHolderView(PlaceHolderView placeHolderView) {
+        this.mPlaceHolderView = placeHolderView;
     }
 }
