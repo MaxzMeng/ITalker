@@ -83,7 +83,6 @@ public class UserHelper {
                     UserCard userCard = rspModel.getResult();
                     User user = userCard.build();
                     user.save();
-                    //TODO 通知联系人列表刷新
                     callback.onDataLoaded(userCard);
                 } else {
                     Factory.decodeRspCode(rspModel, callback);
@@ -96,5 +95,26 @@ public class UserHelper {
             }
         });
 
+    }
+
+    public static void refreshContacts(final DataSource.Callback<List<UserCard>> callback) {
+        RemoteService service = Network.remote();
+
+        service.userContacts().enqueue(new Callback<RspModel<List<UserCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
+                RspModel<List<UserCard>> rspModel = response.body();
+                if (rspModel.success()) {
+                    callback.onDataLoaded(rspModel.getResult());
+                } else {
+                    Factory.decodeRspCode(rspModel, callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+            }
+        });
     }
 }

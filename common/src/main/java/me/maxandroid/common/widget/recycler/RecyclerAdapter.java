@@ -126,6 +126,10 @@ public abstract class RecyclerAdapter<Data>
         return mDataList.size();
     }
 
+    public List<Data> getItems() {
+        return mDataList;
+    }
+
     /**
      * 插入一条数据并通知插入
      *
