@@ -3,7 +3,6 @@ package me.maxandroid.common.tools;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Window;
 

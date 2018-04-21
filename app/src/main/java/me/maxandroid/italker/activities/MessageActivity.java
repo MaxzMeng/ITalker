@@ -2,8 +2,6 @@ package me.maxandroid.italker.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import me.maxandroid.common.app.Activity;
 import me.maxandroid.factory.model.Author;

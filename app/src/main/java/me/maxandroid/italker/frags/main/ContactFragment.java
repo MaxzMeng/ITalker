@@ -1,23 +1,18 @@
 package me.maxandroid.italker.frags.main;
 
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.factory.model.card.UserCard;
 import com.example.factory.model.db.User;
 import com.example.factory.presenter.contact.ContactContract;
 import com.example.factory.presenter.contact.ContactPresenter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import me.maxandroid.common.app.Fragment;
 import me.maxandroid.common.app.PresenterFragment;
 import me.maxandroid.common.widget.EmptyView;
 import me.maxandroid.common.widget.PortraitView;
@@ -25,7 +20,6 @@ import me.maxandroid.common.widget.recycler.RecyclerAdapter;
 import me.maxandroid.italker.R;
 import me.maxandroid.italker.activities.MessageActivity;
 import me.maxandroid.italker.activities.PersonalActivity;
-import me.maxandroid.italker.frags.search.SearchUserFragment;
 
 
 public class ContactFragment extends PresenterFragment<ContactContract.Presenter>

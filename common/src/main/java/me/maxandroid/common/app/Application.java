@@ -3,8 +3,10 @@ package me.maxandroid.common.app;
 import android.os.SystemClock;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
+
 import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;
+
 import java.io.File;
 
 /**

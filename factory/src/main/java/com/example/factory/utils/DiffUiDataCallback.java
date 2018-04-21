@@ -4,11 +4,11 @@ import android.support.v7.util.DiffUtil;
 
 import java.util.List;
 
-public class DiffUtilDataCallback<T extends DiffUtilDataCallback.UiDataDiffer<T>> extends DiffUtil.Callback {
+public class DiffUiDataCallback<T extends DiffUiDataCallback.UiDataDiffer<T>> extends DiffUtil.Callback {
     private List<T> mOldList;
     private List<T> mNewList;
 
-    public DiffUtilDataCallback(List<T> mOldList, List<T> mNewList) {
+    public DiffUiDataCallback(List<T> mOldList, List<T> mNewList) {
         this.mOldList = mOldList;
         this.mNewList = mNewList;
     }

@@ -6,7 +6,6 @@ import android.util.Log;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 
-
 import java.io.File;
 
 import me.maxandroid.common.app.Application;

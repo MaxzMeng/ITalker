@@ -1,11 +1,6 @@
 package me.maxandroid.italker.frags.search;
 
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import me.maxandroid.common.app.Fragment;
 import me.maxandroid.italker.R;
 import me.maxandroid.italker.activities.SearchActivity;

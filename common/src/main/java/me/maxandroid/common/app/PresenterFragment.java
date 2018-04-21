@@ -2,7 +2,6 @@ package me.maxandroid.common.app;
 
 import android.content.Context;
 
-import me.maxandroid.common.widget.convention.PlaceHolderView;
 import me.maxandroid.factory.presenter.BaseContract;
 
 /**

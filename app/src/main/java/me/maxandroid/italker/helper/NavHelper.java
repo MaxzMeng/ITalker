@@ -1,8 +1,8 @@
 package me.maxandroid.italker.helper;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
 

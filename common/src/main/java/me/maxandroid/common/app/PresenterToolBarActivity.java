@@ -1,11 +1,6 @@
 package me.maxandroid.common.app;
 
 
-import android.content.Context;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-
-import me.maxandroid.common.R;
 import me.maxandroid.factory.presenter.BaseContract;
 
 public abstract class PresenterToolBarActivity<Presenter extends BaseContract.Presenter> extends ToolBarActivity implements BaseContract.View<Presenter>{

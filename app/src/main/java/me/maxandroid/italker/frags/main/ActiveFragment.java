@@ -1,9 +1,7 @@
 package me.maxandroid.italker.frags.main;
 
 
-import butterknife.BindView;
 import me.maxandroid.common.app.Fragment;
-import me.maxandroid.common.widget.GalleryView;
 import me.maxandroid.italker.R;
 
 

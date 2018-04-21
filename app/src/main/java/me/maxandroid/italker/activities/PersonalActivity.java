@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,19 +14,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.bumptech.glide.Glide;
 import com.example.factory.model.db.User;
 import com.example.factory.presenter.contact.PersonalContract;
 import com.example.factory.presenter.contact.PersonalPresenter;
 
 import net.qiujuer.genius.res.Resource;
-import net.qiujuer.genius.ui.compat.UiCompat;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import me.maxandroid.common.app.PresenterToolBarActivity;
-import me.maxandroid.common.app.ToolBarActivity;
 import me.maxandroid.common.widget.PortraitView;
 import me.maxandroid.italker.R;
 
@@ -102,7 +98,6 @@ public class PersonalActivity extends PresenterToolBarActivity<PersonalContract.
 
     @OnClick(R.id.btn_say_hello)
     void onSayHelloClick() {
-        // TODO
         User user = mPresenter.getUserPersonal();
         if (user == null) {
             return;
@@ -131,7 +126,6 @@ public class PersonalActivity extends PresenterToolBarActivity<PersonalContract.
     @Override
     public void onLoadDone(User user) {
         if (user == null) {
-            Log.d("user", "onLoadDone: user is null");
             return;
         }
         mPortrait.setup(Glide.with(this), user);

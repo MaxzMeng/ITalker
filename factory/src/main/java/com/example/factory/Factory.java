@@ -2,6 +2,12 @@ package com.example.factory;
 
 import android.support.annotation.StringRes;
 
+import com.example.factory.data.group.GroupCenter;
+import com.example.factory.data.group.GroupDispatcher;
+import com.example.factory.data.message.MessageCenter;
+import com.example.factory.data.message.MessageDispatcher;
+import com.example.factory.data.user.UserCenter;
+import com.example.factory.data.user.UserDispatcher;
 import com.example.factory.model.api.RspModel;
 import com.example.factory.persistence.Account;
 import com.example.factory.utils.DBFlowExclusionStrategy;
@@ -131,4 +137,17 @@ public class Factory {
     public static void dispatchPush(String message) {
 
     }
+
+    public static UserCenter getUserCenter() {
+        return UserDispatcher.instance();
+    }
+
+    public static MessageCenter getMessageCenter() {
+        return MessageDispatcher.instance();
+    }
+
+    public static GroupCenter getGroupCenter() {
+        return GroupDispatcher.instance();
+    }
+
 }

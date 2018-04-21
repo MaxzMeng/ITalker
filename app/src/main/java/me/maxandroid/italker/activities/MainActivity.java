@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-
-import net.qiujuer.genius.ui.Ui;
-import net.qiujuer.genius.ui.widget.FloatActionButton;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +18,9 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.example.factory.persistence.Account;
 
+import net.qiujuer.genius.ui.Ui;
+import net.qiujuer.genius.ui.widget.FloatActionButton;
+
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -29,8 +28,6 @@ import butterknife.OnClick;
 import me.maxandroid.common.app.Activity;
 import me.maxandroid.common.widget.PortraitView;
 import me.maxandroid.italker.R;
-import me.maxandroid.italker.activities.AccountActivity;
-import me.maxandroid.italker.frags.assist.PermissionFragment;
 import me.maxandroid.italker.frags.main.ActiveFragment;
 import me.maxandroid.italker.frags.main.ContactFragment;
 import me.maxandroid.italker.frags.main.GroupFragment;

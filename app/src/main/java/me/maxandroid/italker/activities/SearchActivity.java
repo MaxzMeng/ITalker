@@ -3,7 +3,6 @@ package me.maxandroid.italker.activities;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
@@ -11,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import me.maxandroid.common.app.Activity;
 import me.maxandroid.common.app.Fragment;
 import me.maxandroid.common.app.ToolBarActivity;
 import me.maxandroid.italker.R;

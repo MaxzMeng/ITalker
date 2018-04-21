@@ -1,12 +1,9 @@
 package me.maxandroid.italker.frags.search;
 
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,7 +31,6 @@ import me.maxandroid.common.widget.recycler.RecyclerAdapter;
 import me.maxandroid.italker.R;
 import me.maxandroid.italker.activities.PersonalActivity;
 import me.maxandroid.italker.activities.SearchActivity;
-import me.maxandroid.italker.frags.main.ContactFragment;
 
 /**
  * A simple {@link Fragment} subclass.

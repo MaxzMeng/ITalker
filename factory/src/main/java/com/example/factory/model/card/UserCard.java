@@ -7,10 +7,11 @@ import java.util.Date;
 import me.maxandroid.factory.model.Author;
 
 /**
- * Created by mxz on 18-3-18.
+ * 用户卡片，用于接收服务器返回
+ * @author qiujuer Email:qiujuer@live.cn
+ * @version 1.0.0
  */
-
-public class UserCard implements Author{
+public class UserCard implements Author {
     private String id;
     private String name;
     private String phone;
@@ -110,6 +111,7 @@ public class UserCard implements Author{
         this.modifyAt = modifyAt;
     }
 
+    // 缓存一个对应的User, 不能被GSON框架解析使用ø
     private transient User user;
 
     public User build() {

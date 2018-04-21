@@ -11,11 +11,9 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.example.factory.Factory;
 
-
 import java.io.File;
 import java.util.Date;
 
-import me.maxandroid.common.app.Application;
 import me.maxandroid.utils.HashUtil;
 
 /**

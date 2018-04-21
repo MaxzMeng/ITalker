@@ -8,7 +8,6 @@ import com.example.factory.persistence.Account;
 import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;
 
-import me.maxandroid.factory.presenter.BaseContract;
 import me.maxandroid.factory.presenter.BasePresenter;
 
 public class PersonalPresenter extends BasePresenter<PersonalContract.View> implements PersonalContract.Presenter{

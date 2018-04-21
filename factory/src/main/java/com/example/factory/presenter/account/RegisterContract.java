@@ -1,7 +1,5 @@
 package com.example.factory.presenter.account;
 
-import android.support.annotation.StringRes;
-
 import me.maxandroid.factory.presenter.BaseContract;
 
 /**

@@ -1,7 +1,5 @@
 package me.maxandroid.factory.model;
 
-import java.util.Date;
-
 public interface Author {
     String getId();
 

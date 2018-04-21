@@ -11,13 +11,13 @@ import com.example.factory.model.db.User;
 import com.example.factory.model.db.User_Table;
 import com.example.factory.net.Network;
 import com.example.factory.net.RemoteService;
-import com.example.factory.presenter.contact.FollowPresenter;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.io.IOException;
 import java.util.List;
 
 import me.maxandroid.factory.data.DataSource;
+import me.maxandroid.utils.CollectionUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,8 +37,10 @@ public class UserHelper {
                 RspModel<UserCard> rspModel = response.body();
                 if (rspModel.success()) {
                     UserCard userCard = rspModel.getResult();
-                    User user = userCard.build();
-                    user.save();
+//                    User user = userCard.build();
+                    Factory.getUserCenter().dispatch(userCard);
+//                    user.save();
+//                    DbHelper.save(User.class, user);
                     callback.onDataLoaded(userCard);
                 } else {
                     Factory.decodeRspCode(rspModel, callback);
@@ -86,8 +88,10 @@ public class UserHelper {
                 RspModel<UserCard> rspModel = response.body();
                 if (rspModel.success()) {
                     UserCard userCard = rspModel.getResult();
-                    User user = userCard.build();
-                    user.save();
+                    Factory.getUserCenter().dispatch(userCard);
+//                    User user = userCard.build();
+//                    DbHelper.save(User.class, user);
+//                    user.save();
                     callback.onDataLoaded(userCard);
                 } else {
                     Factory.decodeRspCode(rspModel, callback);
@@ -102,7 +106,7 @@ public class UserHelper {
 
     }
 
-    public static void refreshContacts(final DataSource.Callback<List<UserCard>> callback) {
+    public static void refreshContacts() {
         RemoteService service = Network.remote();
 
         service.userContacts().enqueue(new Callback<RspModel<List<UserCard>>>() {
@@ -110,15 +114,20 @@ public class UserHelper {
             public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
                 RspModel<List<UserCard>> rspModel = response.body();
                 if (rspModel.success()) {
-                    callback.onDataLoaded(rspModel.getResult());
+                    List<UserCard> cards = rspModel.getResult();
+                    if (cards == null || cards.size() == 0) {
+                        return;
+                    }
+//                    callback.onDataLoaded(rspModel.getResult());
+                    Factory.getUserCenter().dispatch(CollectionUtil.toArray(cards, UserCard.class));
                 } else {
-                    Factory.decodeRspCode(rspModel, callback);
+                    Factory.decodeRspCode(rspModel, null);
                 }
             }
 
             @Override
             public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
-                callback.onDataNotAvailable(R.string.data_network_error);
+//                callback.onDataNotAvailable(R.string.data_network_error);
             }
         });
     }
@@ -138,7 +147,9 @@ public class UserHelper {
             UserCard card = response.body().getResult();
             if (card != null) {
                 User user = card.build();
-                user.save();
+//                user.save();
+//                DbHelper.save(User.class, user);
+                Factory.getUserCenter().dispatch(card);
                 return user;
             }
         } catch (IOException e) {
@@ -161,7 +172,7 @@ public class UserHelper {
         if (user == null) {
             return findFromLocal(id);
         }
-        Log.d("UserHelper", "searchFirstOfNet: "+user.toString());
+        Log.d("UserHelper", "searchFirstOfNet: " + user.toString());
         return user;
     }
 }

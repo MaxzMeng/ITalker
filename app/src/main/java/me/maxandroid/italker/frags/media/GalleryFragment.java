@@ -13,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import net.qiujuer.genius.ui.Ui;
-
 import me.maxandroid.common.app.Fragment;
 import me.maxandroid.common.tools.UiTool;
 import me.maxandroid.common.widget.GalleryView;
