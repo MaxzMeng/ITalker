@@ -1,10 +1,8 @@
 package com.example.factory.model.db;
 
-import com.example.factory.utils.DiffUiDataCallback;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.Date;
 import java.util.Objects;
@@ -15,7 +13,7 @@ import me.maxandroid.factory.model.Author;
  * Created by mxz on 18-3-17.
  */
 @Table(database = AppDatabase.class)
-public class User extends BaseModel implements Author, DiffUiDataCallback.UiDataDiffer<User> {
+public class User extends BaseDbModel<User> implements Author{
     public static final int SEX_MAN = 1;
     public static final int SEX_WOMAN = 2;
     @PrimaryKey
@@ -151,13 +149,24 @@ public class User extends BaseModel implements Author, DiffUiDataCallback.UiData
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return (id != null ? !id.equals(user.id) : user.id != null);
+        return sex == user.sex
+                && follows == user.follows
+                && following == user.following
+                && isFollow == user.isFollow
+                && Objects.equals(id, user.id)
+                && Objects.equals(name, user.name)
+                && Objects.equals(phone, user.phone)
+                && Objects.equals(portrait, user.portrait)
+                && Objects.equals(desc, user.desc)
+                && Objects.equals(alias, user.alias)
+                && Objects.equals(modifyAt, user.modifyAt);
+
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, phone, portrait, desc, sex, alias, follows, following, isFollow, modifyAt);
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override

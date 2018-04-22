@@ -3,9 +3,6 @@ package com.example.factory.model.card;
 import com.example.factory.model.db.Group;
 import com.example.factory.model.db.GroupMember;
 import com.example.factory.model.db.User;
-import com.google.gson.annotations.Expose;
-
-
 
 import java.util.Date;
 

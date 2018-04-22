@@ -4,8 +4,6 @@ import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-import com.example.factory.utils.DiffUiDataCallback;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,7 +17,7 @@ import java.util.Objects;
  * @version 1.0.0
  */
 @Table(database = AppDatabase.class)
-public class Group extends BaseModel implements Serializable, DiffUiDataCallback.UiDataDiffer<Group> {
+public class Group extends BaseDbModel<Group> implements Serializable {
     @PrimaryKey
     private String id; // 群Id
     @Column

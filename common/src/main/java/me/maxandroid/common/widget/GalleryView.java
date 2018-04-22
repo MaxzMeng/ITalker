@@ -28,7 +28,7 @@ import me.maxandroid.common.R;
 import me.maxandroid.common.widget.recycler.RecyclerAdapter;
 
 /**
- * TODO: document your custom view class.
+ *
  */
 public class GalleryView extends RecyclerView {
     private static final int LOADER_ID = 0x0100;

@@ -6,7 +6,6 @@ import com.example.factory.model.db.GroupMember;
 import com.example.factory.model.db.Group_Table;
 import com.example.factory.model.db.Message;
 import com.example.factory.model.db.Session;
-import com.example.factory.model.db.User;
 import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -16,14 +15,11 @@ import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import me.maxandroid.utils.CollectionUtil;
 
 public class DbHelper {
     private static final DbHelper instance;
@@ -171,7 +167,7 @@ public class DbHelper {
         }).build().execute();
     }
 
-    public interface ChangedListener<Data> {
+    public interface ChangedListener<Data extends BaseModel> {
         void onDataSave(Data... list);
 
         void onDataDelete(Data... list);

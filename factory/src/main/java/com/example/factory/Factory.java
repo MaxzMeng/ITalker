@@ -1,6 +1,7 @@
 package com.example.factory;
 
 import android.support.annotation.StringRes;
+import android.util.Log;
 
 import com.example.factory.data.group.GroupCenter;
 import com.example.factory.data.group.GroupDispatcher;
@@ -8,14 +9,22 @@ import com.example.factory.data.message.MessageCenter;
 import com.example.factory.data.message.MessageDispatcher;
 import com.example.factory.data.user.UserCenter;
 import com.example.factory.data.user.UserDispatcher;
+import com.example.factory.model.api.PushModel;
 import com.example.factory.model.api.RspModel;
+import com.example.factory.model.card.GroupCard;
+import com.example.factory.model.card.GroupMemberCard;
+import com.example.factory.model.card.MessageCard;
+import com.example.factory.model.card.UserCard;
 import com.example.factory.persistence.Account;
 import com.example.factory.utils.DBFlowExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -27,6 +36,7 @@ import me.maxandroid.factory.data.DataSource;
  */
 
 public class Factory {
+    private static final String TAG = Factory.class.getSimpleName();
     private static final Factory instance;
     private final Executor executor;
     private final Gson gson;
@@ -134,7 +144,49 @@ public class Factory {
 
     }
 
-    public static void dispatchPush(String message) {
+    public static void dispatchPush(String str) {
+        if (!Account.isLogin()) {
+            return;
+        }
+        PushModel model = PushModel.decode(str);
+        if (model == null) {
+            return;
+        }
+
+        Log.e(TAG, model.toString());
+        for (PushModel.Entity entity : model.getEntities()) {
+            switch (entity.type) {
+                case PushModel.ENTITY_TYPE_LOGOUT:
+                    instance.logout();
+                    return;
+                case PushModel.ENTITY_TYPE_MESSAGE:{
+                    MessageCard card = getGson().fromJson(entity.content, MessageCard.class);
+                    getMessageCenter().dispatch(card);
+                    break;
+                }
+                case PushModel.ENTITY_TYPE_ADD_FRIEND:{
+                    UserCard card = getGson().fromJson(entity.content, UserCard.class);
+                    getUserCenter().dispatch(card);
+                    break;
+                }
+                case PushModel.ENTITY_TYPE_ADD_GROUP:{
+                    GroupCard card = getGson().fromJson(entity.content, GroupCard.class);
+                    getGroupCenter().dispatch(card);
+                    break;
+                }
+                case PushModel.ENTITY_TYPE_MODIFY_GROUP_MEMBERS:
+                case PushModel.ENTITY_TYPE_ADD_GROUP_MEMBERS:{
+                    Type type = new TypeToken<List<GroupMemberCard>>() {
+                    }.getType();
+                    List<GroupMemberCard> card = getGson().fromJson(entity.content, type);
+                    getGroupCenter().dispatch(card.toArray(new GroupMemberCard[0]));
+                    break;
+                }
+                case PushModel.ENTITY_TYPE_EXIT_GROUP_MEMBERS:{
+                    //TODO
+                }
+            }
+        }
 
     }
 
