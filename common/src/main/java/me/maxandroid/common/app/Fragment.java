@@ -54,7 +54,7 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
         initData();
     }
 
-    protected void initArgs(Bundle intent) {
+    protected void initArgs(Bundle bundle) {
 
     }
 
