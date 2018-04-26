@@ -8,12 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.factory.model.db.Group;
+import com.example.factory.presenter.message.ChatContract;
+
 import me.maxandroid.italker.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChatGroupFragment extends ChatFragment {
+public class ChatGroupFragment extends ChatFragment<Group>
+        implements ChatContract.GroupView {
+
 
 
     public ChatGroupFragment() {
@@ -30,5 +35,15 @@ public class ChatGroupFragment extends ChatFragment {
         super.onOffsetChanged(appBarLayout, verticalOffset);
         if (verticalOffset == 0) {
         }
+    }
+
+    @Override
+    public void onInit(Group group) {
+
+    }
+
+    @Override
+    protected ChatContract.Presenter initPresenter() {
+        return null;
     }
 }

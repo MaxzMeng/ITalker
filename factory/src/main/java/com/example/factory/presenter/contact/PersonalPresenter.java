@@ -44,6 +44,9 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View> impl
         Run.onUiAsync(new Action() {
             @Override
             public void call() {
+                if (getView() == null) {
+                    return;
+                }
                 view.onLoadDone(user);
                 view.setFollowStatus(isFollow);
                 view.allowSayHello(allowSayHello);

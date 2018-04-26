@@ -8,7 +8,8 @@ import me.maxandroid.factory.presenter.BaseContract;
  * Created by mxz on 18-3-17.
  */
 
-public abstract class PresenterFragment<Presenter extends BaseContract.Presenter> extends Fragment implements BaseContract.View<Presenter> {
+public abstract class PresenterFragment<Presenter extends BaseContract.Presenter> extends Fragment
+        implements BaseContract.View<Presenter> {
     protected Presenter mPresenter;
 
     protected abstract Presenter initPresenter();
@@ -40,5 +41,13 @@ public abstract class PresenterFragment<Presenter extends BaseContract.Presenter
     @Override
     public void setPresenter(Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.destroy();
+        }
     }
 }
