@@ -25,18 +25,6 @@ public class ChatPresenter<View extends ChatContract.View> extends BaseSourcePre
     }
 
     @Override
-    public void onDataLoaded(List<Message> messages) {
-        ChatContract.View view = getView();
-        if (view == null) {
-            return;
-        }
-        List<Message> old = view.getRecyclerAdapter().getItems();
-        DiffUiDataCallback<Message> callback = new DiffUiDataCallback<>(old, messages);
-        DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
-        refreshData(result, messages);
-    }
-
-    @Override
     public void pushText(String content) {
         MsgCreateModel model = new MsgCreateModel.Builder()
                 .receiver(mReceiverId, mReceiverType)
@@ -45,6 +33,7 @@ public class ChatPresenter<View extends ChatContract.View> extends BaseSourcePre
 
         MessageHelper.push(model);
     }
+
 
     @Override
     public void pushAudio(String path) {
@@ -67,5 +56,17 @@ public class ChatPresenter<View extends ChatContract.View> extends BaseSourcePre
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onDataLoaded(List<Message> messages) {
+        ChatContract.View view = getView();
+        if (view == null) {
+            return;
+        }
+        List<Message> old = view.getRecyclerAdapter().getItems();
+        DiffUiDataCallback<Message> callback = new DiffUiDataCallback<>(old, messages);
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
+        refreshData(result, messages);
     }
 }

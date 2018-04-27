@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.example.factory.model.db.Group;
+import com.example.factory.model.db.Message;
+import com.example.factory.model.db.Session;
 
 import me.maxandroid.common.app.Activity;
 import me.maxandroid.common.app.Fragment;
@@ -19,6 +21,14 @@ public class MessageActivity extends Activity {
     private static final String KEY_RECEIVER_IS_GROUP = "KEY_RECEIVER_IS_GROUP";
     private String mReceiverId;
     private boolean mIsGroup;
+
+    public static void show(Context context, Session session) {
+        if (session == null || context == null || TextUtils.isEmpty(session.getId())) return;
+        Intent intent = new Intent(context, MessageActivity.class);
+        intent.putExtra(KEY_RECEIVER_ID, session.getId());
+        intent.putExtra(KEY_RECEIVER_IS_GROUP, session.getReceiverType() == Message.RECEIVER_TYPE_GROUP);
+        context.startActivity(intent);
+    }
 
     public static void show(Context context, Author author) {
         if (author == null || context == null || TextUtils.isEmpty(author.getId())) return;
@@ -36,6 +46,7 @@ public class MessageActivity extends Activity {
         intent.putExtra(KEY_RECEIVER_IS_GROUP, true);
         context.startActivity(intent);
     }
+
 
     @Override
     protected int getContentLayoutId() {

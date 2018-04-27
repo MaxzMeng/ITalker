@@ -142,9 +142,6 @@ public class DbHelper {
             Session.Identify identify = Session.createSessionIdentify(message);
             identifies.add(identify);
         }
-        if (identifies.size() == 0) {
-            return;
-        }
         DatabaseDefinition definition = FlowManager.getDatabase(AppDatabase.class);
         definition.beginTransactionAsync(new ITransaction() {
             @Override
