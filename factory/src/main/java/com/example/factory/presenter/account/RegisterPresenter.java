@@ -4,7 +4,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 
 import com.example.factory.R;
-import com.example.factory.data.Helper.AccountHelper;
+import com.example.factory.data.helper.AccountHelper;
 import com.example.factory.model.api.account.RegisterModel;
 import com.example.factory.model.db.User;
 import com.example.factory.persistence.Account;

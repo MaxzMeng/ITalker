@@ -2,7 +2,7 @@ package com.example.factory.data.user;
 
 import android.text.TextUtils;
 
-import com.example.factory.data.Helper.DbHelper;
+import com.example.factory.data.helper.DbHelper;
 import com.example.factory.model.card.UserCard;
 import com.example.factory.model.db.User;
 

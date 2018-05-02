@@ -2,10 +2,10 @@ package com.example.factory.data.message;
 
 import android.text.TextUtils;
 
-import com.example.factory.data.Helper.DbHelper;
-import com.example.factory.data.Helper.GroupHelper;
-import com.example.factory.data.Helper.MessageHelper;
-import com.example.factory.data.Helper.UserHelper;
+import com.example.factory.data.helper.DbHelper;
+import com.example.factory.data.helper.GroupHelper;
+import com.example.factory.data.helper.MessageHelper;
+import com.example.factory.data.helper.UserHelper;
 import com.example.factory.model.card.MessageCard;
 import com.example.factory.model.db.Group;
 import com.example.factory.model.db.Message;

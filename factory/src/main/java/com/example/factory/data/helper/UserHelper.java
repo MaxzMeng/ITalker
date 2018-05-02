@@ -1,4 +1,4 @@
-package com.example.factory.data.Helper;
+package com.example.factory.data.helper;
 
 import android.util.Log;
 
@@ -9,8 +9,10 @@ import com.example.factory.model.api.user.UserUpdateModel;
 import com.example.factory.model.card.UserCard;
 import com.example.factory.model.db.User;
 import com.example.factory.model.db.User_Table;
+import com.example.factory.model.db.view.UserSampleModel;
 import com.example.factory.net.Network;
 import com.example.factory.net.RemoteService;
+import com.example.factory.persistence.Account;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.io.IOException;
@@ -175,4 +177,26 @@ public class UserHelper {
         Log.d("UserHelper", "searchFirstOfNet: " + user.toString());
         return user;
     }
+
+    public static List<User> getContact() {
+        return SQLite.select()
+                .from(User.class)
+                .where(User_Table.isFollow.eq(true))
+                .and(User_Table.id.notEq(Account.getUserId()))
+                .orderBy(User_Table.name, true)
+                .limit(100)
+                .queryList();
+    }
+
+    public static List<UserSampleModel> getSampleContact() {
+        return SQLite.select(User_Table.id.withTable().as("id"),
+                User_Table.name.withTable().as("name"),
+                User_Table.portrait.withTable().as("portrait"))
+                .from(User.class)
+                .where(User_Table.isFollow.eq(true))
+                .and(User_Table.id.notEq(Account.getUserId()))
+                .orderBy(User_Table.name, true)
+                .queryCustomList(UserSampleModel.class);
+    }
+
 }

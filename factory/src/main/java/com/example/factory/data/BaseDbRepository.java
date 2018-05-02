@@ -2,7 +2,7 @@ package com.example.factory.data;
 
 import android.support.annotation.NonNull;
 
-import com.example.factory.data.Helper.DbHelper;
+import com.example.factory.data.helper.DbHelper;
 import com.example.factory.model.db.BaseDbModel;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 

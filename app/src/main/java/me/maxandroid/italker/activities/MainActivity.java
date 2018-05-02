@@ -92,8 +92,6 @@ public class MainActivity extends Activity
                         this.view.setBackground(resource.getCurrent());
                     }
                 });
-
-
     }
 
     @Override
@@ -118,7 +116,7 @@ public class MainActivity extends Activity
     @OnClick(R.id.btn_action)
     void onActionClick() {
         if (Objects.equals(mNavHelper.getCurrentTab().extra, R.string.title_group)) {
-
+            GroupCreateActivity.show(this);
         } else {
             SearchActivity.show(this, SearchActivity.TYPE_USER);
         }

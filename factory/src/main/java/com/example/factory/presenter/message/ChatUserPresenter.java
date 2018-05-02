@@ -1,6 +1,6 @@
 package com.example.factory.presenter.message;
 
-import com.example.factory.data.Helper.UserHelper;
+import com.example.factory.data.helper.UserHelper;
 import com.example.factory.data.message.MessageRepository;
 import com.example.factory.model.db.Message;
 import com.example.factory.model.db.User;

@@ -3,7 +3,7 @@ package com.example.factory.presenter.account;
 import android.text.TextUtils;
 
 import com.example.factory.R;
-import com.example.factory.data.Helper.AccountHelper;
+import com.example.factory.data.helper.AccountHelper;
 import com.example.factory.model.api.account.LoginModel;
 import com.example.factory.model.db.User;
 import com.example.factory.persistence.Account;

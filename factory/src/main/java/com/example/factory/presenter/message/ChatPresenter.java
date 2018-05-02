@@ -2,7 +2,7 @@ package com.example.factory.presenter.message;
 
 import android.support.v7.util.DiffUtil;
 
-import com.example.factory.data.Helper.MessageHelper;
+import com.example.factory.data.helper.MessageHelper;
 import com.example.factory.data.message.MessageDataSource;
 import com.example.factory.model.api.message.MsgCreateModel;
 import com.example.factory.model.db.Message;

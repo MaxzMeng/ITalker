@@ -1,4 +1,4 @@
-package com.example.factory.data.Helper;
+package com.example.factory.data.helper;
 
 import com.example.factory.model.db.Session;
 import com.example.factory.model.db.Session_Table;

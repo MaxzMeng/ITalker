@@ -1,4 +1,4 @@
-package com.example.factory.data.Helper;
+package com.example.factory.data.helper;
 
 import android.text.TextUtils;
 

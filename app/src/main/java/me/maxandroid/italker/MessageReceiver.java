@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.factory.Factory;
-import com.example.factory.data.Helper.AccountHelper;
+import com.example.factory.data.helper.AccountHelper;
 import com.example.factory.persistence.Account;
 import com.igexin.sdk.PushConsts;
 

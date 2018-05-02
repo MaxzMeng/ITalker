@@ -14,10 +14,10 @@ android {
 //                GETUI_APP_KEY   : "jrFICYYfbt9YUHil5QTaY7",
 //                GETUI_APP_SECRET: "ce4pbrF7eL9UjaDAzIy52A",
 //                PACKAGE_NAME    : applicationId
-                GETUI_APP_ID    : "Rr51sROK4B8FXbq0TUjAF5",//"sxjLlJy9Lu5lfVuya7c6q",
-                GETUI_APP_KEY   : "eurxTdqHECAKgc7s4xtUe9",//"jrFICYYfbt9YUHil5QTaY7",
-                GETUI_APP_SECRET: "wvAHiSQwuJ79Fp1tBy8Td8",//"ce4pbrF7eL9UjaDAzIy52A",
-                PACKAGE_NAME    : "net.qiujuer.italker.push"//applicationId
+GETUI_APP_ID    : "Rr51sROK4B8FXbq0TUjAF5",//"sxjLlJy9Lu5lfVuya7c6q",
+GETUI_APP_KEY   : "eurxTdqHECAKgc7s4xtUe9",//"jrFICYYfbt9YUHil5QTaY7",
+GETUI_APP_SECRET: "wvAHiSQwuJ79Fp1tBy8Td8",//"ce4pbrF7eL9UjaDAzIy52A",
+PACKAGE_NAME    : "net.qiujuer.italker.push"//applicationId
         ]
     }
     buildTypes {

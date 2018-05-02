@@ -35,7 +35,8 @@ import me.maxandroid.italker.activities.SearchActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchUserFragment extends PresenterFragment<SearchContract.Presenter> implements SearchActivity.SearchFragment, SearchContract.UserView {
+public class SearchUserFragment extends PresenterFragment<SearchContract.Presenter>
+        implements SearchActivity.SearchFragment, SearchContract.UserView {
 
     @BindView(R.id.empty)
     EmptyView mEmptyView;

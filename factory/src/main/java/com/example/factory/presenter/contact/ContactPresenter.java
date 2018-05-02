@@ -2,7 +2,7 @@ package com.example.factory.presenter.contact;
 
 import android.support.v7.util.DiffUtil;
 
-import com.example.factory.data.Helper.UserHelper;
+import com.example.factory.data.helper.UserHelper;
 import com.example.factory.data.user.ContactDataSource;
 import com.example.factory.data.user.ContactRepository;
 import com.example.factory.model.db.User;

@@ -65,6 +65,10 @@
             android:label="@string/title_activity_personal"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransStatusBar" />
+        <activity
+            android:name=".activities.GroupCreateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Group.Create" />
     </application>
 
 </manifest>

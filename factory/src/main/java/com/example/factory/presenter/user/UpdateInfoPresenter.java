@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.example.factory.Factory;
 import com.example.factory.R;
-import com.example.factory.data.Helper.UserHelper;
+import com.example.factory.data.helper.UserHelper;
 import com.example.factory.model.api.user.UserUpdateModel;
 import com.example.factory.model.card.UserCard;
 import com.example.factory.model.db.User;

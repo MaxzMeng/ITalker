@@ -1,4 +1,4 @@
-package com.example.factory.data.Helper;
+package com.example.factory.data.helper;
 
 import com.example.factory.model.db.AppDatabase;
 import com.example.factory.model.db.Group;

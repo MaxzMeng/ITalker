@@ -2,9 +2,9 @@ package com.example.factory.model.db;
 
 import android.text.TextUtils;
 
-import com.example.factory.data.Helper.GroupHelper;
-import com.example.factory.data.Helper.MessageHelper;
-import com.example.factory.data.Helper.UserHelper;
+import com.example.factory.data.helper.GroupHelper;
+import com.example.factory.data.helper.MessageHelper;
+import com.example.factory.data.helper.UserHelper;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;

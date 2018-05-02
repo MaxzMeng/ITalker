@@ -1,6 +1,6 @@
 package com.example.factory.presenter.search;
 
-import com.example.factory.data.Helper.UserHelper;
+import com.example.factory.data.helper.UserHelper;
 import com.example.factory.model.card.UserCard;
 
 import net.qiujuer.genius.kit.handler.Run;
