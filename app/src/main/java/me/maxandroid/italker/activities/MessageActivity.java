@@ -40,7 +40,7 @@ public class MessageActivity extends Activity {
 
     public static void show(Context context, Group group) {
         if (group == null || context == null || TextUtils.isEmpty(group.getId())) return;
-        context.startActivity(new Intent(context, MessageActivity.class));
+//        context.startActivity(new Intent(context, MessageActivity.class));
         Intent intent = new Intent(context, MessageActivity.class);
         intent.putExtra(KEY_RECEIVER_ID, group.getId());
         intent.putExtra(KEY_RECEIVER_IS_GROUP, true);
@@ -56,7 +56,7 @@ public class MessageActivity extends Activity {
     @Override
     protected boolean initArgs(Bundle bundle) {
         mReceiverId = bundle.getString(KEY_RECEIVER_ID);
-        mIsGroup = bundle.getBoolean(mReceiverId);
+        mIsGroup = bundle.getBoolean(KEY_RECEIVER_IS_GROUP);
         return !TextUtils.isEmpty(mReceiverId);
     }
 

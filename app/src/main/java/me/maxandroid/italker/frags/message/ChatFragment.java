@@ -1,6 +1,7 @@
 package me.maxandroid.italker.frags.message;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,6 +23,8 @@ import com.example.factory.presenter.message.ChatContract;
 
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
+import net.qiujuer.widget.airpanel.AirPanel;
+import net.qiujuer.widget.airpanel.Util;
 
 import java.util.Objects;
 
@@ -32,6 +36,7 @@ import me.maxandroid.common.widget.adapter.TextWatcherAdapter;
 import me.maxandroid.common.widget.recycler.RecyclerAdapter;
 import me.maxandroid.italker.R;
 import me.maxandroid.italker.activities.MessageActivity;
+import me.maxandroid.italker.frags.panel.PanelFragment;
 
 public abstract class ChatFragment<InitModel>
         extends PresenterFragment<ChatContract.Presenter>
@@ -51,6 +56,11 @@ public abstract class ChatFragment<InitModel>
     @BindView(R.id.btn_submit)
     View mSubmit;
 
+    private PanelFragment mPanelFragment;
+    //    @BindView(R.id.lay_panel)
+//    View mPanel;
+    private AirPanel.Boss mPanelBoss;
+
     @Override
     protected void initArgs(Bundle bundle) {
 
@@ -59,8 +69,29 @@ public abstract class ChatFragment<InitModel>
     }
 
     @Override
+    protected final int getLayoutId() {
+        return R.layout.fragment_chat_common;
+    }
+
+    @LayoutRes
+    protected abstract int getHeaderLayoutId();
+
+    @Override
     protected void initWidget(View root) {
+        ViewStub stub = root.findViewById(R.id.view_stub_header);
+        stub.setLayoutResource(getHeaderLayoutId());
+        stub.inflate();
         super.initWidget(root);
+
+        mPanelBoss = root.findViewById(R.id.lay_content);
+        mPanelBoss.setup(new AirPanel.PanelListener() {
+            @Override
+            public void requestHideSoftKeyboard() {
+                Util.hideKeyboard(mContent);
+            }
+        });
+        mPanelFragment = (PanelFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
+
         initToolbar();
         initAppbar();
         initEditContent();
@@ -103,12 +134,14 @@ public abstract class ChatFragment<InitModel>
 
     @OnClick(R.id.btn_face)
     void onFaceClick() {
-
+        mPanelBoss.openPanel();
+        mPanelFragment.showFace();
     }
 
     @OnClick(R.id.btn_record)
     void onRecordClick() {
-
+        mPanelBoss.openPanel();
+        mPanelFragment.showRecord();
     }
 
     @OnClick(R.id.btn_submit)
@@ -123,7 +156,8 @@ public abstract class ChatFragment<InitModel>
     }
 
     private void onMoreClick() {
-        //TODO
+        mPanelBoss.openPanel();
+        mPanelFragment.showGallery();
     }
 
     @Override

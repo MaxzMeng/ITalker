@@ -23,6 +23,7 @@ import me.maxandroid.common.widget.recycler.RecyclerAdapter;
 import me.maxandroid.italker.R;
 import me.maxandroid.italker.activities.MessageActivity;
 import me.maxandroid.italker.activities.PersonalActivity;
+import me.maxandroid.italker.frags.message.ChatGroupFragment;
 
 
 public class GroupFragment extends PresenterFragment<GroupsContract.Presenter>
@@ -113,11 +114,6 @@ public class GroupFragment extends PresenterFragment<GroupsContract.Presenter>
             } else {
                 mMember.setText("");
             }
-        }
-
-        @OnClick(R.id.im_portrait)
-        void onPortraitClick() {
-            PersonalActivity.show(getContext(), mData.getId());
         }
     }
 }

@@ -12,8 +12,7 @@
         android:clipToPadding="false"
         android:elevation="1dp"
         android:outlineProvider="bounds"
-        android:paddingBottom="@dimen/len_12"
-        android:paddingTop="@dimen/len_12"
+        android:padding="@dimen/len_4"
         android:visibility="gone" />
 
     <me.maxandroid.common.widget.EmptyView

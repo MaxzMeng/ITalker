@@ -3,6 +3,9 @@ package com.example.factory.presenter.message;
 import com.example.factory.model.db.Group;
 import com.example.factory.model.db.Message;
 import com.example.factory.model.db.User;
+import com.example.factory.model.db.view.MemberUserModel;
+
+import java.util.List;
 
 import me.maxandroid.factory.presenter.BaseContract;
 
@@ -26,6 +29,8 @@ public interface ChatContract {
     }
 
     interface GroupView extends View<Group> {
+        void showAdminOption(boolean isAdmin);
 
+        void onInitGroupMembers(List<MemberUserModel> members, long moreCount);
     }
 }

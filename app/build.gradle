@@ -26,9 +26,9 @@ PACKAGE_NAME    : "net.qiujuer.italker.push"//applicationId
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     buildToolsVersion '27.0.3'
 }
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
@@ -49,4 +49,6 @@ dependencies {
     compile "com.yalantis:ucrop:$rootProject.ext.ucropVersion"
     compile "pub.devrel:easypermissions:$rootProject.ext.easypermissionVersion"
     compile "com.getui:sdk:$rootProject.ext.getuiVersion"
+    compile "net.qiujuer.widget:airpanel:$rootProject.ext.airpanelVersion"
+
 }
