@@ -102,6 +102,21 @@ public abstract class ChatFragment<InitModel>
                 Util.hideKeyboard(mContent);
             }
         });
+        mPanelBoss.setOnStateChangedListener(new AirPanel.OnStateChangedListener() {
+            @Override
+            public void onPanelStateChanged(boolean isOpen) {
+                if (isOpen) {
+                    onBottomPanelOpened();
+                }
+            }
+
+            @Override
+            public void onSoftKeyboardStateChanged(boolean isOpen) {
+                if (isOpen) {
+                    onBottomPanelOpened();
+                }
+            }
+        });
         mPanelFragment = (PanelFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
         mPanelFragment.setup(this);
         initToolbar();
@@ -163,6 +178,20 @@ public abstract class ChatFragment<InitModel>
     public void onDestroy() {
         super.onDestroy();
         mAudioPlayer.destroy();
+    }
+
+    private void onBottomPanelOpened() {
+        if (mAppBarLayout != null) {
+            mAppBarLayout.setExpanded(false,true);
+        }
+    }
+    @Override
+    public boolean onBackPressed() {
+        if (mPanelBoss.isOpen()) {
+            mPanelBoss.closePanel();
+            return true;
+        }
+        return super.onBackPressed();
     }
 
     @Override
