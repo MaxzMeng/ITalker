@@ -39,4 +39,5 @@ dependencies {
     compile "net.qiujuer.widget:airpanel:$rootProject.ext.airpanelVersion"
     implementation project(':face-res')
     compile "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
+    compile "net.qiujuer.lame:lame:$rootProject.ext.lameVersion"
 }

@@ -19,8 +19,11 @@ import net.qiujuer.genius.ui.Ui;
 import java.io.File;
 import java.util.List;
 
+import me.maxandroid.common.app.Application;
 import me.maxandroid.common.app.Fragment;
+import me.maxandroid.common.tools.AudioRecordHelper;
 import me.maxandroid.common.tools.UiTool;
+import me.maxandroid.common.widget.AudioRecordView;
 import me.maxandroid.common.widget.GalleryView;
 import me.maxandroid.common.widget.recycler.RecyclerAdapter;
 import me.maxandroid.face.Face;
@@ -125,7 +128,55 @@ public class PanelFragment extends Fragment {
     }
 
     private void initRecord(View root) {
+        View recordView = mRecordPanel = root.findViewById(R.id.lay_panel_record);
+        final AudioRecordView audioRecordView = recordView.findViewById(R.id.view_audio_record);
+        File tmpFile = Application.getAudioTmpFile(true);
+        final AudioRecordHelper helper = new AudioRecordHelper(tmpFile, new AudioRecordHelper.RecordCallback() {
+            @Override
+            public void onRecordStart() {
 
+            }
+
+            @Override
+            public void onProgress(long time) {
+
+            }
+
+            @Override
+            public void onRecordDone(File file, long time) {
+                if (time < 1000) {
+                    return;
+                }
+
+                File audioFile = Application.getAudioTmpFile(false);
+                if (file.renameTo(audioFile)) {
+                    PanelCallback panelCallback = mCallBack;
+                    if (panelCallback != null) {
+                        panelCallback.onRecordSend(audioFile, time);
+                    }
+                }
+            }
+        });
+        audioRecordView.setup(new AudioRecordView.Callback() {
+            @Override
+            public void requestStartRecord() {
+                helper.recordAsync();
+            }
+
+            @Override
+            public void requestStopRecord(int type) {
+                switch (type) {
+                    case AudioRecordView.END_TYPE_DELETE:
+                    case AudioRecordView.END_TYPE_CANCEL:
+                        helper.stop(true);
+                        break;
+                    case AudioRecordView.END_TYPE_NONE:
+                    case AudioRecordView.END_TYPE_PLAY:
+                        helper.stop(false);
+                        break;
+                }
+            }
+        });
     }
 
     private void initGallery(View root) {
@@ -157,21 +208,22 @@ public class PanelFragment extends Fragment {
         callback.onSendGallery(path);
 
     }
+
     public void showFace() {
         mGalleryPanel.setVisibility(View.GONE);
-//        mRecordPanel.setVisibility(View.GONE);
+        mRecordPanel.setVisibility(View.GONE);
         mFacePanel.setVisibility(View.VISIBLE);
     }
 
     public void showRecord() {
         mGalleryPanel.setVisibility(View.GONE);
-//        mRecordPanel.setVisibility(View.GONE);
+        mRecordPanel.setVisibility(View.VISIBLE);
         mFacePanel.setVisibility(View.GONE);
     }
 
     public void showGallery() {
         mGalleryPanel.setVisibility(View.VISIBLE);
-//        mRecordPanel.setVisibility(View.GONE);
+        mRecordPanel.setVisibility(View.GONE);
         mFacePanel.setVisibility(View.GONE);
     }
 

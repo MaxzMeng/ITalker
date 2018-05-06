@@ -54,6 +54,9 @@ public class MessageHelper {
                             case Message.TYPE_PIC:
                                 content = uploadPicture(card.getContent());
                                 break;
+                            case Message.TYPE_AUDIO:
+                                content = uploadAudio(card.getContent());
+                                break;
                             default:
                                 content = "";
                                 break;
@@ -121,7 +124,11 @@ public class MessageHelper {
     }
 
     private static String uploadAudio(String content) {
-        return null;
+        File file = new File(content);
+        if (!file.exists() || file.length() <= 0) {
+            return null;
+        }
+        return UploadHelper.uploadAudio(content);
     }
 
     public static Message findLastWithGroup(String groupId) {

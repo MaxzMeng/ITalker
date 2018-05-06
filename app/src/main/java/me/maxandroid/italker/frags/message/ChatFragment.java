@@ -23,7 +23,10 @@ import com.example.factory.model.db.Message;
 import com.example.factory.model.db.User;
 import com.example.factory.persistence.Account;
 import com.example.factory.presenter.message.ChatContract;
+import com.example.factory.utils.FileCache;
 
+import net.qiujuer.genius.kit.handler.Run;
+import net.qiujuer.genius.kit.handler.runable.Action;
 import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
@@ -35,7 +38,9 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.maxandroid.common.app.Application;
 import me.maxandroid.common.app.PresenterFragment;
+import me.maxandroid.common.tools.AudioPlayHelper;
 import me.maxandroid.common.widget.PortraitView;
 import me.maxandroid.common.widget.adapter.TextWatcherAdapter;
 import me.maxandroid.common.widget.recycler.RecyclerAdapter;
@@ -66,7 +71,8 @@ public abstract class ChatFragment<InitModel>
     //    @BindView(R.id.lay_panel)
 //    View mPanel;
     private AirPanel.Boss mPanelBoss;
-
+    private FileCache<AudioHolder> mAudioFileCache;
+    AudioPlayHelper<AudioHolder> mAudioPlayer;
     @Override
     protected void initArgs(Bundle bundle) {
 
@@ -104,6 +110,64 @@ public abstract class ChatFragment<InitModel>
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new Adapter();
         mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setListener(new RecyclerAdapter.AdapterListenerImpl<Message>() {
+            @Override
+            public void onItemClick(RecyclerAdapter.ViewHolder holder, Message message) {
+                if (message.getType() == Message.TYPE_AUDIO && holder instanceof ChatFragment.AudioHolder) {
+                    mAudioFileCache.download(((AudioHolder) holder), message.getContent());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAudioPlayer = new AudioPlayHelper<>(new AudioPlayHelper.RecordPlayListener<AudioHolder>() {
+            @Override
+            public void onPlayStart(AudioHolder audioHolder) {
+                audioHolder.onPlayStart();
+            }
+
+            @Override
+            public void onPlayStop(AudioHolder audioHolder) {
+                audioHolder.onPlayStop();
+            }
+
+            @Override
+            public void onPlayError(AudioHolder audioHolder) {
+                Application.showToast(R.string.toast_audio_play_error);
+            }
+        });
+        mAudioFileCache = new FileCache<>("audio/cache", "mp3", new FileCache.CacheListener<AudioHolder>() {
+
+            @Override
+            public void onDownloadSucceed(final AudioHolder holder, final File file) {
+                Run.onUiAsync(new Action() {
+                    @Override
+                    public void call() {
+                        mAudioPlayer.trigger(holder, file.getAbsolutePath());
+                    }
+                });
+            }
+
+            @Override
+            public void onDownloadFailed(AudioHolder audioHolder) {
+                Application.showToast(R.string.toast_download_error);
+            }
+        });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAudioPlayer.destroy();
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
         mPresenter.start();
     }
 
@@ -188,7 +252,7 @@ public abstract class ChatFragment<InitModel>
 
     @Override
     public void onRecordSend(File file, long time) {
-
+        mPresenter.pushAudio(file.getAbsolutePath(), time);
     }
 
     private class Adapter extends RecyclerAdapter<Message> {
@@ -264,7 +328,7 @@ public abstract class ChatFragment<InitModel>
         @OnClick(R.id.im_portrait)
         void onRePushClick() {
             if (mLoading != null && mPresenter.rePush(mData)) {
-
+                updateData(mData);
             }
         }
     }
@@ -289,6 +353,8 @@ public abstract class ChatFragment<InitModel>
     class AudioHolder extends BaseHolder {
         @BindView(R.id.txt_content)
         TextView mContent;
+        @BindView(R.id.im_audio_track)
+        ImageView mAudioTrack;
 
         public AudioHolder(View itemView) {
             super(itemView);
@@ -297,6 +363,29 @@ public abstract class ChatFragment<InitModel>
         @Override
         protected void onBind(Message message) {
             super.onBind(message);
+            String attach = TextUtils.isEmpty(message.getAttach()) ? "0" : message.getAttach();
+            mContent.setText(formatTime(attach));
+        }
+
+        void onPlayStart() {
+            mAudioTrack.setVisibility(View.VISIBLE);
+        }
+
+        void onPlayStop() {
+            mAudioTrack.setVisibility(View.INVISIBLE);
+        }
+
+        private String formatTime(String attach) {
+            float time;
+            try {
+                time = Float.parseFloat(attach) / 1000f;
+            } catch (Exception e) {
+                time = 0;
+                e.printStackTrace();
+            }
+            String shortTime = String.valueOf(Math.round(time * 10f) / 10f);
+            shortTime = shortTime.replaceAll("[.]0+?$|0+?$", "");
+            return String.format("%s", shortTime);
         }
     }
 

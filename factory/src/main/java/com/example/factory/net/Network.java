@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Network {
     private static Network instance;
     private Retrofit retrofit;
-
+    private OkHttpClient client;
     static {
         instance = new Network();
     }
@@ -31,9 +31,9 @@ public class Network {
 
     }
 
-    public static Retrofit getRetrofit() {
-        if (instance.retrofit != null) return instance.retrofit;
-        OkHttpClient client = new OkHttpClient.Builder()
+    public static OkHttpClient getClient() {
+        if (instance.client != null) return instance.client;
+         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
@@ -48,6 +48,15 @@ public class Network {
                     }
                 })
                 .build();
+
+        instance.client = client;
+        return instance.client;
+    }
+    public static Retrofit getRetrofit() {
+        if (instance.retrofit != null) return instance.retrofit;
+        OkHttpClient client = getClient();
+
+        instance.client = client;
         Retrofit.Builder builder = new Retrofit.Builder();
         instance.retrofit = builder.baseUrl(Common.Constance.API_URL)
                 .client(client)

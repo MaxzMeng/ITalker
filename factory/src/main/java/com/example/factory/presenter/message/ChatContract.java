@@ -13,7 +13,7 @@ public interface ChatContract {
     interface Presenter extends BaseContract.Presenter {
         void pushText(String content);
 
-        void pushAudio(String path);
+        void pushAudio(String path,long time);
 
         void pushImage(String[] paths);
 
