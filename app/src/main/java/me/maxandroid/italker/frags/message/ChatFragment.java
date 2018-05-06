@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewStub;
@@ -21,6 +23,7 @@ import com.example.factory.model.db.User;
 import com.example.factory.persistence.Account;
 import com.example.factory.presenter.message.ChatContract;
 
+import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
 import net.qiujuer.widget.airpanel.AirPanel;
@@ -34,13 +37,14 @@ import me.maxandroid.common.app.PresenterFragment;
 import me.maxandroid.common.widget.PortraitView;
 import me.maxandroid.common.widget.adapter.TextWatcherAdapter;
 import me.maxandroid.common.widget.recycler.RecyclerAdapter;
+import me.maxandroid.face.Face;
 import me.maxandroid.italker.R;
 import me.maxandroid.italker.activities.MessageActivity;
 import me.maxandroid.italker.frags.panel.PanelFragment;
 
 public abstract class ChatFragment<InitModel>
         extends PresenterFragment<ChatContract.Presenter>
-        implements AppBarLayout.OnOffsetChangedListener, ChatContract.View<InitModel> {
+        implements AppBarLayout.OnOffsetChangedListener, ChatContract.View<InitModel>,PanelFragment.PanelCallback {
     protected Adapter mAdapter;
     protected String mReceiverId;
     @BindView(R.id.toolbar)
@@ -91,7 +95,7 @@ public abstract class ChatFragment<InitModel>
             }
         });
         mPanelFragment = (PanelFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
-
+        mPanelFragment.setup(this);
         initToolbar();
         initAppbar();
         initEditContent();
@@ -168,6 +172,11 @@ public abstract class ChatFragment<InitModel>
     @Override
     public void onAdapterDataChanged() {
 
+    }
+
+    @Override
+    public EditText getInputEditText() {
+        return mContent;
     }
 
     private class Adapter extends RecyclerAdapter<Message> {
@@ -259,7 +268,9 @@ public abstract class ChatFragment<InitModel>
         @Override
         protected void onBind(Message message) {
             super.onBind(message);
-            mContent.setText(message.getContent());
+            Spannable spannable = new SpannableString(message.getContent());
+            Face.decode(mContent, spannable, (int) Ui.dipToPx(getResources(), 20));
+            mContent.setText(spannable);
         }
     }
 

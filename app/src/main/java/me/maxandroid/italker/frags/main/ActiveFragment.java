@@ -3,6 +3,8 @@ package me.maxandroid.italker.frags.main;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,11 +15,14 @@ import com.example.factory.model.db.Session;
 import com.example.factory.presenter.message.SessionContract;
 import com.example.factory.presenter.message.SessionPresenter;
 
+import net.qiujuer.genius.ui.Ui;
+
 import butterknife.BindView;
 import me.maxandroid.common.app.PresenterFragment;
 import me.maxandroid.common.widget.EmptyView;
 import me.maxandroid.common.widget.PortraitView;
 import me.maxandroid.common.widget.recycler.RecyclerAdapter;
+import me.maxandroid.face.Face;
 import me.maxandroid.italker.R;
 import me.maxandroid.italker.activities.MessageActivity;
 import me.maxandroid.utils.DateTimeUtil;
@@ -102,7 +107,10 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
         protected void onBind(Session session) {
             mPortraitView.setup(Glide.with(ActiveFragment.this), session.getPicture());
             mName.setText(session.getTitle());
-            mContent.setText(TextUtils.isEmpty(session.getContent()) ? "" : session.getContent());
+            String str = TextUtils.isEmpty(session.getContent()) ? "" : session.getContent();
+            Spannable spannable = new SpannableString(session.getContent());
+            Face.decode(mContent, spannable, (int) mContent.getTextSize());
+            mContent.setText(spannable);
             mTime.setText(DateTimeUtil.getSampleDate(session.getModifyAt()));
         }
     }

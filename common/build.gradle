@@ -37,4 +37,6 @@ dependencies {
     implementation project(':lang')
     compile "net.qiujuer.genius:kit-handler:$rootProject.ext.geniusVersion"
     compile "net.qiujuer.widget:airpanel:$rootProject.ext.airpanelVersion"
+    implementation project(':face-res')
+    compile "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
 }
