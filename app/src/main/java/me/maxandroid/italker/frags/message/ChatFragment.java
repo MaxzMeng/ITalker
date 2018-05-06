@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,6 +30,7 @@ import net.qiujuer.genius.ui.widget.Loading;
 import net.qiujuer.widget.airpanel.AirPanel;
 import net.qiujuer.widget.airpanel.Util;
 
+import java.io.File;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -44,7 +46,7 @@ import me.maxandroid.italker.frags.panel.PanelFragment;
 
 public abstract class ChatFragment<InitModel>
         extends PresenterFragment<ChatContract.Presenter>
-        implements AppBarLayout.OnOffsetChangedListener, ChatContract.View<InitModel>,PanelFragment.PanelCallback {
+        implements AppBarLayout.OnOffsetChangedListener, ChatContract.View<InitModel>, PanelFragment.PanelCallback {
     protected Adapter mAdapter;
     protected String mReceiverId;
     @BindView(R.id.toolbar)
@@ -179,6 +181,16 @@ public abstract class ChatFragment<InitModel>
         return mContent;
     }
 
+    @Override
+    public void onSendGallery(String[] paths) {
+        mPresenter.pushImage(paths);
+    }
+
+    @Override
+    public void onRecordSend(File file, long time) {
+
+    }
+
     private class Adapter extends RecyclerAdapter<Message> {
         @Override
         protected int getItemViewType(int position, Message message) {
@@ -289,6 +301,8 @@ public abstract class ChatFragment<InitModel>
     }
 
     class PicHolder extends BaseHolder {
+        @BindView(R.id.im_image)
+        ImageView mContent;
 
         public PicHolder(View itemView) {
             super(itemView);
@@ -297,6 +311,11 @@ public abstract class ChatFragment<InitModel>
         @Override
         protected void onBind(Message message) {
             super.onBind(message);
+            String content = message.getContent();
+            Glide.with(ChatFragment.this)
+                    .load(content)
+                    .fitCenter()
+                    .into(mContent);
         }
     }
 }

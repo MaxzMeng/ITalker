@@ -1,5 +1,10 @@
 package com.example.factory.data.helper;
 
+import android.os.SystemClock;
+import android.text.TextUtils;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.example.factory.Factory;
 import com.example.factory.model.api.RspModel;
 import com.example.factory.model.api.message.MsgCreateModel;
@@ -8,9 +13,16 @@ import com.example.factory.model.db.Message;
 import com.example.factory.model.db.Message_Table;
 import com.example.factory.net.Network;
 import com.example.factory.net.RemoteService;
+import com.example.factory.net.UploadHelper;
 import com.raizlabs.android.dbflow.sql.language.OperatorGroup;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
+import java.io.File;
+
+import me.maxandroid.common.Common;
+import me.maxandroid.common.app.Application;
+import me.maxandroid.utils.PicturesCompressor;
+import me.maxandroid.utils.StreamUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,8 +43,31 @@ public class MessageHelper {
                 if (message != null && message.getStatus() != Message.STATUS_FAILED) {
                     return;
                 }
+
                 final MessageCard card = model.buildCard();
                 Factory.getMessageCenter().dispatch(card);
+
+                if (card.getType() != Message.TYPE_STR) {
+                    if (!card.getContent().startsWith(UploadHelper.ENDPOINT)) {
+                        String content;
+                        switch (card.getType()) {
+                            case Message.TYPE_PIC:
+                                content = uploadPicture(card.getContent());
+                                break;
+                            default:
+                                content = "";
+                                break;
+                        }
+                        if (TextUtils.isEmpty(content)) {
+                            card.setStatus(Message.STATUS_FAILED);
+                            Factory.getMessageCenter().dispatch(card);
+                        }
+                        card.setContent(content);
+                        Factory.getMessageCenter().dispatch(card);
+                        model.refreshByCard();
+
+                    }
+                }
                 RemoteService service = Network.remote();
                 service.msgPush(model).enqueue(new Callback<RspModel<MessageCard>>() {
                     @Override
@@ -57,6 +92,36 @@ public class MessageHelper {
                 });
             }
         });
+    }
+
+    private static String uploadPicture(String path) {
+        File file = null;
+        try {
+            file = Glide.with(Factory.app())
+                    .load(path)
+                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (file != null) {
+            String cacheDir = Application.getCacheDirFile().getAbsolutePath();
+            String tempFile = String.format("%s/image/Cache_%s.png", cacheDir, SystemClock.uptimeMillis());
+            try {
+                if (PicturesCompressor.compressImage(file.getAbsolutePath(), tempFile, Common.Constance.MAX_UPLOAD_IMAGE_LENGTH)) {
+                    String ossPath = UploadHelper.uploadImage(tempFile);
+                    StreamUtil.delete(tempFile);
+                    return ossPath;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private static String uploadAudio(String content) {
+        return null;
     }
 
     public static Message findLastWithGroup(String groupId) {

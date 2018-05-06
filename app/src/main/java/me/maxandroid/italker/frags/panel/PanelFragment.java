@@ -12,13 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import net.qiujuer.genius.ui.Ui;
 
+import java.io.File;
 import java.util.List;
 
 import me.maxandroid.common.app.Fragment;
 import me.maxandroid.common.tools.UiTool;
+import me.maxandroid.common.widget.GalleryView;
 import me.maxandroid.common.widget.recycler.RecyclerAdapter;
 import me.maxandroid.face.Face;
 import me.maxandroid.italker.R;
@@ -28,6 +31,9 @@ import me.maxandroid.italker.R;
  */
 public class PanelFragment extends Fragment {
     private PanelCallback mCallBack;
+    private View mFacePanel;
+    private View mGalleryPanel;
+    private View mRecordPanel;
 
     public PanelFragment() {
         // Required empty public constructor
@@ -49,8 +55,9 @@ public class PanelFragment extends Fragment {
     public void setup(PanelCallback callback) {
         mCallBack = callback;
     }
+
     private void initFace(View root) {
-        View facePanel = root.findViewById(R.id.lay_panel_face);
+        View facePanel = mFacePanel = root.findViewById(R.id.lay_panel_face);
         TabLayout tabLayout = facePanel.findViewById(R.id.tab);
         View backspace = facePanel.findViewById(R.id.im_backspace);
         backspace.setOnClickListener(new View.OnClickListener() {
@@ -122,24 +129,59 @@ public class PanelFragment extends Fragment {
     }
 
     private void initGallery(View root) {
-
+        View galleryPanel = mGalleryPanel = root.findViewById(R.id.lay_gallery_panel);
+        final GalleryView galleryView = galleryPanel.findViewById(R.id.view_gallery);
+        final TextView selectedSize = galleryPanel.findViewById(R.id.txt_gallery_select_count);
+        galleryView.setup(getLoaderManager(), new GalleryView.SelectedChangeListener() {
+            @Override
+            public void onSelectedCountChanged(int count) {
+                String resStr = getText(R.string.label_gallery_selected_size).toString();
+                selectedSize.setText(String.format(resStr, count));
+            }
+        });
+        galleryPanel.findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onGallerySendClick(galleryView, galleryView.getSelectedPath());
+            }
+        });
     }
 
-    public void showFace() {
+    private void onGallerySendClick(GalleryView galleryView, String[] path) {
+        galleryView.clear();
 
+        PanelCallback callback = mCallBack;
+        if (callback == null) {
+            return;
+        }
+        callback.onSendGallery(path);
+
+    }
+    public void showFace() {
+        mGalleryPanel.setVisibility(View.GONE);
+//        mRecordPanel.setVisibility(View.GONE);
+        mFacePanel.setVisibility(View.VISIBLE);
     }
 
     public void showRecord() {
-
+        mGalleryPanel.setVisibility(View.GONE);
+//        mRecordPanel.setVisibility(View.GONE);
+        mFacePanel.setVisibility(View.GONE);
     }
 
     public void showGallery() {
-
+        mGalleryPanel.setVisibility(View.VISIBLE);
+//        mRecordPanel.setVisibility(View.GONE);
+        mFacePanel.setVisibility(View.GONE);
     }
 
 
     public interface PanelCallback {
         EditText getInputEditText();
+
+        void onSendGallery(String[] paths);
+
+        void onRecordSend(File file, long time);
     }
 
 }

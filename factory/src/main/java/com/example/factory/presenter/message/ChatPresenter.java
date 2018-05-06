@@ -42,7 +42,17 @@ public class ChatPresenter<View extends ChatContract.View> extends BaseSourcePre
 
     @Override
     public void pushImage(String[] paths) {
+        if (paths == null || paths.length == 0) {
+            return;
+        }
+        for (String path : paths) {
+            MsgCreateModel model = new MsgCreateModel.Builder()
+                    .receiver(mReceiverId, mReceiverType)
+                    .content(path, Message.TYPE_PIC)
+                    .build();
 
+            MessageHelper.push(model);
+        }
     }
 
     @Override

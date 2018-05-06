@@ -22,7 +22,7 @@ import me.maxandroid.utils.HashUtil;
 
 public class UploadHelper {
     private static final String TAG = UploadHelper.class.getSimpleName();
-        private static final String ENDPOINT = "oss-cn-beijing.aliyuncs.com";
+    public static final String ENDPOINT = "oss-cn-beijing.aliyuncs.com";
     private static final String BUCKET_NAME = "immax";
 //    public static final String ENDPOINT = "http://oss-cn-hongkong.aliyuncs.com";
 //     上传的仓库名

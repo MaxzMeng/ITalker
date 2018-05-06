@@ -58,7 +58,6 @@
         <activity
             android:name=".activities.MessageActivity"
             android:label="@string/title_activity_message"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Message"
             android:windowSoftInputMode="adjustResize" />
         <activity
