@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.util.Property;
@@ -20,7 +21,7 @@ import me.maxandroid.italker.activities.AccountActivity;
 import me.maxandroid.italker.activities.MainActivity;
 import me.maxandroid.italker.frags.assist.PermissionFragment;
 
-public class LaunchActivity extends Activity{
+public class LaunchActivity extends Activity {
     private ColorDrawable mBgDrawable;
 
     @Override
@@ -31,7 +32,6 @@ public class LaunchActivity extends Activity{
     @Override
     protected void initWidget() {
         super.initWidget();
-
         View root = findViewById(R.id.activity_launch);
         int color = UiCompat.getColor(getResources(), R.color.colorPrimary);
         ColorDrawable drawable = new ColorDrawable(color);
@@ -131,7 +131,8 @@ public class LaunchActivity extends Activity{
             return object.mBgDrawable.getColor();
         }
     };
-        interface PermissionCallback{
-            void show();
-        }
+
+    interface PermissionCallback {
+        void show();
+    }
 }
